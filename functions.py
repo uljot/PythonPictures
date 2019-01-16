@@ -1,4 +1,5 @@
 from PIL import Image, ImageDraw, ImageFilter  # imports the library
+from win32api import GetSystemMetrics
 import math
 
 #original = Image.open("./images/pi.jpg") # load an image from the hard drive
@@ -59,12 +60,17 @@ def midpoint_circle(radius, centre_x, centre_y, pencil, color):
             y -= 1
         circle_points(x, y, centre_x, centre_y, pencil, color)
 
-canvas = Image.new('RGBA', (600, 300), color='white')
+def fill_midpoint_circle(radius, centre_x, centre_y, pencil, color):
+    while radius > 0:
+        midpoint_circle(radius, centre_x, centre_y, pencil, color)
+        radius -= 1
+
+width = GetSystemMetrics(0)
+height = GetSystemMetrics(1)
+
+canvas = Image.new('RGBA', (width, height), color='white')
 pencil = ImageDraw.Draw(canvas)
 
-simple_line(34, 89, 278, 130, pencil, 'green')
-midpoint_line(34, 95, 278, 135, pencil, 'red')
-
-midpoint_circle(100, 250, 150, pencil, 'blue')
+fill_midpoint_circle(100, 250, 150, pencil, 'blue')
 
 canvas.show()
