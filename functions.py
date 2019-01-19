@@ -75,15 +75,17 @@ def random_circle_dimensions(width, height):
 width = GetSystemMetrics(0)
 height = GetSystemMetrics(1)
 
+circle_functions = [fill_midpoint_circle, midpoint_circle]
+
 color_generator = randomcolor.RandomColor()
 bg_color = color_generator.generate()
-color_list = color_generator.generate(count=3)
+color_list = color_generator.generate(count=50)
 
 canvas = Image.new('RGBA', (width, height), bg_color[0])
 pencil = ImageDraw.Draw(canvas)
 
-test_dimensions = random_circle_dimensions(width, height)
-print(test_dimensions)
-fill_midpoint_circle(test_dimensions[0], test_dimensions[1], test_dimensions[2], pencil, random.choice(color_list))
+for i in range(0, math.floor(height/10)):
+        test_dimensions = random_circle_dimensions(width, height)
+        random.choice(circle_functions)(test_dimensions[0], test_dimensions[1], test_dimensions[2], pencil, random.choice(color_list))
 
 canvas.show()
