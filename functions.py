@@ -65,6 +65,13 @@ def fill_midpoint_circle(radius, centre_x, centre_y, pencil, color):
         midpoint_circle(radius, centre_x, centre_y, pencil, color)
         radius -= 1
 
+def random_circle_dimensions(width, height):
+    circle_dim = []
+    circle_dim.append(random.randint(20,250))
+    circle_dim.append(random.randint(0 - math.ceil(circle_dim[0]/2), width + math.floor(circle_dim[0]/2)))
+    circle_dim.append(random.randint(0 - math.ceil(circle_dim[0]/2), height + math.floor(circle_dim[0]/2)))
+    return circle_dim
+
 width = GetSystemMetrics(0)
 height = GetSystemMetrics(1)
 
@@ -72,11 +79,11 @@ color_generator = randomcolor.RandomColor()
 bg_color = color_generator.generate()
 color_list = color_generator.generate(count=3)
 
-#print(rand_col)
-
 canvas = Image.new('RGBA', (width, height), bg_color[0])
 pencil = ImageDraw.Draw(canvas)
 
-fill_midpoint_circle(100, 250, 150, pencil, random.choice(color_list))
+test_dimensions = random_circle_dimensions(width, height)
+print(test_dimensions)
+fill_midpoint_circle(test_dimensions[0], test_dimensions[1], test_dimensions[2], pencil, random.choice(color_list))
 
 canvas.show()
