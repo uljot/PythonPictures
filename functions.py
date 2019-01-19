@@ -1,6 +1,6 @@
-from PIL import Image, ImageDraw, ImageFilter  # imports the library
+from PIL import Image, ImageDraw, ImageColor, ImageFilter  # imports the library
 from win32api import GetSystemMetrics
-import math
+import math, randomcolor, random
 
 #original = Image.open("./images/pi.jpg") # load an image from the hard drive
 #blurred = original.filter(ImageFilter.BLUR) # blur the image
@@ -68,9 +68,15 @@ def fill_midpoint_circle(radius, centre_x, centre_y, pencil, color):
 width = GetSystemMetrics(0)
 height = GetSystemMetrics(1)
 
-canvas = Image.new('RGBA', (width, height), color='white')
+color_generator = randomcolor.RandomColor()
+bg_color = color_generator.generate()
+color_list = color_generator.generate(count=3)
+
+#print(rand_col)
+
+canvas = Image.new('RGBA', (width, height), bg_color[0])
 pencil = ImageDraw.Draw(canvas)
 
-fill_midpoint_circle(100, 250, 150, pencil, 'blue')
+fill_midpoint_circle(100, 250, 150, pencil, random.choice(color_list))
 
 canvas.show()
